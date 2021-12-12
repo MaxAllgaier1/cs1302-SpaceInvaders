@@ -8,6 +8,7 @@ public class SpaceShip extends ImageView {
     private Game game; // game containing this sprite
     public double x;
     public double y;
+    public int lives;
     /**
      * Construct an {@code IdleCat} object.
      * @param game parent game
@@ -19,5 +20,10 @@ public class SpaceShip extends ImageView {
         this.game = game;
         setX(x);
         setY(y);
+        lives = 4;
     } // IdleCat
+
+    public void takeLife() {
+        lives -= 1;
+    }
 }

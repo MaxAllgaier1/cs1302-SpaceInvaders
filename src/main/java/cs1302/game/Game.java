@@ -88,6 +88,9 @@ public abstract class Game extends Region {
     private void handleKeyPressed(KeyEvent event) {
         logger.info(event.toString());
         keysPressed.set(event.getCode().getCode());
+        if (event.getCode().equals(KeyCode.SPACE)) {
+            handleMissile(event.getCode());
+        }
     } // handleKeyPressed
 
     /**
@@ -98,7 +101,12 @@ public abstract class Game extends Region {
         logger.info(event.toString());
         keysPressed.clear(event.getCode().getCode());
     } // handleKeyReleased
-
+/**
+ * handles the missile being fired from space bar or randomly from alien.
+ */
+    public void handleMissile(KeyCode keycode) {
+        //do nothing
+    }
     /**
      * Return whether or not a key is currently pressed.
      * @param key the key code to check

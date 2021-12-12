@@ -38,7 +38,7 @@ public class OmegaApp extends Application {
             = new Label("Move left/right with arrow keys; click rectangle to teleport.");
 */
         // demo game provided with the starter code
-        DemoGame game = new DemoGame(640, 680);
+        DemoGame game = new DemoGame(900, 680);
 
         // setup scene
         VBox root = new VBox(game);
