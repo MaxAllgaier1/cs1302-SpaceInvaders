@@ -3,7 +3,7 @@ package cs1302.game;
 import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javafx.scene.text.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -33,6 +33,7 @@ public abstract class Game extends Region {
     protected final Logger logger = Logger.getLogger("cs1302.game.Game");
 
     private final Bounds bounds;                     // game bounds
+
     private final Duration fpsTarget;                // target duration for game loop
     private final Timeline loop = new Timeline();    // timeline for main game loop
     private final BitSet keysPressed = new BitSet(); // set of currently pressed keys
@@ -81,6 +82,7 @@ public abstract class Game extends Region {
      */
     protected abstract void update();
 
+    public abstract void getBar(Bar b);
     /**
      * Add the key code for the pressed key to the set of pressed keys.
      * @param event associated key event
@@ -92,6 +94,10 @@ public abstract class Game extends Region {
             handleMissile(event.getCode());
         }
     } // handleKeyPressed
+
+    protected abstract int getScore();
+
+    protected abstract Text getLevelText();
 
     /**
      * Remove the key code for the released key from the set of pressed keys.
@@ -139,8 +145,9 @@ public abstract class Game extends Region {
         if (!initialized) {
             init();
             initialized = true;
-        } // if
-        loop.play();
+        } else {
+            loop.play();
+        }
     } // start
 
     /**
@@ -148,7 +155,14 @@ public abstract class Game extends Region {
      */
     public final void stop() {
         loop.stop();
+        reset();
+        init();
     } // stop
+
+    /**
+     * Resets all variables after game is stopped
+     */
+     protected abstract void reset();
 
     /**
      * Pause the main game loop.

@@ -26,4 +26,8 @@ public class SpaceShip extends ImageView {
     public void takeLife() {
         lives -= 1;
     }
+
+    public int getLives() {
+        return lives;
+    }
 }

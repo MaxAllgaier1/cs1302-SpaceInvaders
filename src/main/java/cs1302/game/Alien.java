@@ -5,10 +5,9 @@ import javafx.scene.image.ImageView;
 import java.util.*;
 
 /**
- * A simple "sprite" of an idle cat.
+ * A alien class.
  */
 public class Alien extends ImageView {
-
     private Game thegame; // game containing this sprite
     private double dx; // change in x per update
     private double dy; // change in y per update
@@ -17,7 +16,6 @@ public class Alien extends ImageView {
     public double rand;
     public ArrayList<Missile> almisses;
     public boolean dead;
-
     /**
      * Construct an {@code IdleCat} object.
      * @param game parent game

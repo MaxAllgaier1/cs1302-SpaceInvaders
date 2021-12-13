@@ -23,6 +23,10 @@ public class Invaders {
         deaths = 0;
     }
 
+    public int getSize() {
+        return 40 - checkDeaths();
+    }
+
     public int checkDeaths() {
         deaths = 0;
         for (int i = 0; i < invads.length; i++) {
@@ -34,9 +38,20 @@ public class Invaders {
                 }
             }
         }
-        System.out.println(deaths);
         return deaths;
     }
+
+    public void removeAlien(int x, int y) {
+        invads[x][y] = null;
+    }
+
+    public boolean checkDeath(int x, int y) {
+        if (invads[x][y] == null) {
+            return true;
+        }
+        return false;
+    }
+
 
     public boolean checkBounds() {
         for (int i = 0; i < invads.length; i++) {
@@ -72,17 +87,22 @@ public class Invaders {
         }
     }
 
-/*    public ArrayList<Missile> getAllAlMisses() {
-        allalmisses = new ArrayList<Missile>();
-        for (int i = 0; i < invads.length; i++) {
-            for (int j = 0; j < invads[0].length; j++) {
-                allalmisses.addAll(invads[i][j].getAlMisses());
+    public Alien getAlien(int i, int j) {
+        int ii = i;
+        int jj = j;
+        while (checkDeath(i, j)) {
+            j += 1;
+            if (j == 10) {
+                j = 0;
+                i += 1;
+                if (i == 4) {
+                    i = 0;
+                }
+            }
+            if (ii == i && jj == j) {
+                return null;
             }
         }
-        return allalmisses;
-    }
-*/
-    public Alien getAlien(int i, int j) {
         return invads[i][j];
     }
 
