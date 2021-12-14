@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 
 /**
- * A simple "sprite" of an idle cat.
+ * Missile class for missiles being shot. it is a rectangle
  */
 public class Missile extends Rectangle {
     private Game game; // game containing this sprite
@@ -17,8 +17,12 @@ public class Missile extends Rectangle {
     public boolean ship;
 
     /**
-     * Construct an {@code IdleCat} object.
+     * Construct an {@code Missile} object.
      * @param game parent game
+     * @param x is the x coord
+     * @param y is the y coord
+     * @param ship is the boolean telling whether the missile is from the ship or alien
+     * @param level is the current level of the game.
      */
     public Missile(Game game, double x, double y, boolean ship, int level) {
         super(x, y, 5, 15);
@@ -36,14 +40,17 @@ public class Missile extends Rectangle {
                 this.setHeight(35);
             }
         }
-    } // IdleCat
+    }
 
+    /**
+     * Kills the missile by making it dissapear to the side.
+     */
     public void setDead() {
         setX(900);
     }
 
     /**
-     * Update the position of the cat.
+     * Update the position of the missile.
      */
     public void update() {
         dy = -10;
@@ -53,6 +60,10 @@ public class Missile extends Rectangle {
         setY(getY() + dy);
     } // update
 
+    /**
+     * boolean tellin which direction the missile is going.
+     * @return whether missile is going up or not.
+     */
     public boolean goingUp() {
         return ship;
     }

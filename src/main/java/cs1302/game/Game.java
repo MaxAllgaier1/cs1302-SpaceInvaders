@@ -94,8 +94,16 @@ public abstract class Game extends Region {
         }
     } // handleKeyPressed
 
+    /**
+     * Gets the score of the game.
+     * @return game's score
+     */
     protected abstract int getScore();
 
+    /**
+     * Returns a text telling what level the game is at.
+     * @return text for the level
+     */
     protected abstract Text getLevelText();
 
     /**
@@ -106,12 +114,15 @@ public abstract class Game extends Region {
         logger.info(event.toString());
         keysPressed.clear(event.getCode().getCode());
     } // handleKeyReleased
+
 /**
  * handles the missile being fired from space bar or randomly from alien.
+ * @param keycode is the key code being inputted
  */
     public void handleMissile(KeyCode keycode) {
         //do nothing
     }
+
     /**
      * Return whether or not a key is currently pressed.
      * @param key the key code to check
@@ -159,9 +170,9 @@ public abstract class Game extends Region {
     } // stop
 
     /**
-     * Resets all variables after game is stopped
+     * Resets all variables after game is stopped.
      */
-     protected abstract void reset();
+    protected abstract void reset();
 
     /**
      * Pause the main game loop.

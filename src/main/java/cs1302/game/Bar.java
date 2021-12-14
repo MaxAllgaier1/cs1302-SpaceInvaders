@@ -14,7 +14,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 
-
+/**
+ * Bar class at the bottom of the game.
+ * includes a pause/play and restart game button.
+ */
 public class Bar extends HBox {
     public HBox hbox;
     public Game game;
@@ -27,7 +30,7 @@ public class Bar extends HBox {
     int tx;
 
 /**
-     * Construct an {@code IdleCat} object.
+     * Construct an {@code Bar} object.
      * @param game parent game
      */
     public Bar(Game game) {
@@ -47,6 +50,10 @@ public class Bar extends HBox {
         x = 0;
     }
 
+    /**
+     * Pause methods pauses the game.
+     * @param p is the action event from button.
+     */
     public void pause(ActionEvent p) {
         if (pause.getText().equals("Pause")) {
             pause.setText("Play");
@@ -54,9 +61,13 @@ public class Bar extends HBox {
         } else {
             pause.setText("Pause");
             this.game.play();
-       	}
+        }
     }
 
+    /**
+     * Stops the game by calling method in game.
+     * @param s is the action event from the stop button.
+     */
     public void stop(ActionEvent s) {
         this.game.stop();
         pause.setText("Play");

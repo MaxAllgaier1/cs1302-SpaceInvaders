@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import java.util.*;
 
 /**
- * A alien class.
+ * A alien class. Constructs one of the invaders.
  */
 public class Alien extends ImageView {
     private Game thegame; // game containing this sprite
@@ -14,12 +14,14 @@ public class Alien extends ImageView {
     public double x;
     public double y;
     public double rand;
-    public ArrayList<Missile> almisses;
     public boolean dead;
-    /**
-     * Construct an {@code IdleCat} object.
-     * @param game parent game
-     */
+
+/**
+ * Construct an {@code Alien} object.
+ * @param game parent game
+ * @param x coordinate of alien on game.
+ * @param y coordinate of alien on game.
+ */
     public Alien(Game game, double x, double y) {
         super("file:resources/sprites/alienSprite.png"); // call parent constructor
         this.setPreserveRatio(true);
@@ -32,6 +34,9 @@ public class Alien extends ImageView {
         dead = false;
     }
 
+    /**
+     * sets the aliens dead boolean to true and moves the alien off the screen.
+     */
     public void setDead() {
         setY(1000);
         setX(400);
@@ -40,6 +45,9 @@ public class Alien extends ImageView {
 
     /**
      * Update the position of the alien.
+     * @param godown is a boolean to tell the alien to go down.
+     * @param speed is the speed added to the alien. It increments in this game as
+     * aliens die so that the aliens are faster when there are less aliens left.
      */
     public void update(boolean godown, double speed) {
         if (!dead) {

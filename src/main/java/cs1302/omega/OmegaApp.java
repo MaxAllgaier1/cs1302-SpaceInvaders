@@ -1,6 +1,6 @@
 package cs1302.omega;
 
-import cs1302.game.DemoGame;
+import cs1302.game.MyGame;
 import cs1302.game.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,7 +26,7 @@ public class OmegaApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        DemoGame game = new DemoGame(900, 680);
+        MyGame game = new MyGame(900, 680);
         Bar bar = new Bar(game);
 
         // setup scene
