@@ -41,6 +41,14 @@ public class Invaders {
         return deaths;
     }
 
+    public boolean isWon() {
+        if (checkDeaths() == 40) {
+            return true;
+        }
+        return false;
+
+    }
+
     public void removeAlien(int x, int y) {
         invads[x][y] = null;
     }

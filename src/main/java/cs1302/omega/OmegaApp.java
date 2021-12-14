@@ -26,17 +26,6 @@ public class OmegaApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        // demonstrate how to load local asset using "file:resources/"
-/*        Image bannerImage = new Image("file:resources/readme-banner.png");
-        ImageView banner = new ImageView(bannerImage);
-        banner.setPreserveRatio(false);
-        banner.setFitWidth(640);
-
-        // some labels to display information
-        Label notice = new Label("Modify the starter code to suit your needs.");
-        Label instructions
-            = new Label("Move left/right with arrow keys; click rectangle to teleport.");
-*/
         DemoGame game = new DemoGame(900, 680);
         Bar bar = new Bar(game);
 
@@ -45,7 +34,7 @@ public class OmegaApp extends Application {
         Scene scene = new Scene(root);
 
         // setup stage
-        stage.setTitle("OmegaApp!");
+        stage.setTitle("Space Invaders!");
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> Platform.exit());
         stage.sizeToScene();
@@ -53,7 +42,6 @@ public class OmegaApp extends Application {
 
         // play the game
         game.play();
-//        bar.play();
     } // start
 
 } // OmegaApp

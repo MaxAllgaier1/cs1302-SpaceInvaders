@@ -31,15 +31,20 @@ public class DemoGame extends Game {
     public int level;
     public Bounds lower;
     public endWindow ew;
+    public endWindow winew;
     public Bar thebar;
     public Image ewImage;
     public ImageView ewIView;
+    public Image winewImage;
+    public ImageView winewIview;
     public int numba;
     public ImageView scoreV;
     public ImageView levelV;
+    public ImageView livesV;
     public Image leImage;
     public Image scImage;
-
+    public Image liImage;
+    public Boss boss;
 
     /**
      * Construct a {@code DemoGame} object.
@@ -61,6 +66,10 @@ public class DemoGame extends Game {
         ew = new endWindow(this, false);
         ewImage = ew.snapshot(null, null);
         ewIView = new ImageView(ewImage);
+        boss = new Boss(this);
+        winew = new endWindow(this, true);
+        winewImage = winew.snapshot(null, null);
+        winewIview = new ImageView(winewImage);
     } // DemoGame
 
     /** {@inheritDoc} */
@@ -89,11 +98,16 @@ public class DemoGame extends Game {
         Text sco = new Text("Score: " + getScore());
         scImage = sco.snapshot(null, null);
         scoreV = new ImageView(scImage);
-        this.getChildren().addAll(levelV, scoreV);
+        Text liv = new Text("Lives: " + this.player.getLives());
+        liImage = liv.snapshot(null, null);
+        livesV = new ImageView(liImage);
+        this.getChildren().addAll(levelV, scoreV, livesV);
         levelV.setX(750);
         levelV.setY(50);
         scoreV.setX(750);
         scoreV.setY(100);
+        livesV.setX(750);
+        livesV.setY(150);
     } // init
 
 
@@ -144,8 +158,8 @@ public class DemoGame extends Game {
                     }
                 }
             }
-
-            if (Math.random() <= .06) {
+	    double add = (40 - invaders.checkDeaths()) * .00175;
+            if (Math.random() <= .033 + add) {
                 int num = 1000;
                 int numx;
                 Alien a;
@@ -153,11 +167,11 @@ public class DemoGame extends Game {
                     numx = (int)(Math.random() * 40);
                     a = invaders.getAlien(numx / 10, numx % 10);
                 } while (false);
-                Missile newmis = new Missile(this, a.getX(), a.getY(), false);
+                Missile newmis = new Missile(this, a.getX(), a.getY(), false, 0);
                 missiles.add(newmis);
                 getChildren().add(newmis);
             }
-            if (invaders.isWon) {
+            if (invaders.isWon()) {
                 level = 1;
                 this.getChildren().add(boss);
             }
@@ -169,8 +183,11 @@ public class DemoGame extends Game {
         leImage = lev.snapshot(null, null);
         Text sco = new Text("Score: " + getScore());
         scImage = sco.snapshot(null, null);
+        Text liv = new Text("Lives: " + this.player.getLives());
+        liImage = liv.snapshot(null, null);
         scoreV.setImage(scImage);
         levelV.setImage(leImage);
+        livesV.setImage(liImage);
         if (level == 1) {
             boss.update();
             ArrayList<Bounds> shipMissiles = new ArrayList<Bounds>();
@@ -179,25 +196,46 @@ public class DemoGame extends Game {
                 missiles.get(i).update();
                 try {
                     if (boss.intersects(lower) || this.player.getLives() == 0) {
-                        lose();
+        	        System.out.println("bossloss");
+			lose();
                     }
-                    Bounds ab = al.getBoundsInParent();
+                    Bounds bb = boss.getBoundsInParent();
                     if (missiles.get(i).goingUp()) {
                         Bounds mb = missiles.get(i).getBoundsInParent();
-                        if (ab.intersects(mb)) {
+                        if (bb.intersects(mb)) {
                             System.out.println(i);
                             missiles.get(i).setDead();
-                            al.setDead();
-                            j = invaders.getSize();
+                            boss.setDead();
                         }
                     }
                 } catch(NullPointerException npe) {
                     //nothing
                 }
+
+                if (!missiles.get(i).goingUp()) {
+                    Bounds sb = this.player.getBoundsInParent();
+                    Bounds mb = missiles.get(i).getBoundsInParent();
+                    if (sb.intersects(mb)) {
+                        missiles.get(i).setDead();
+                        this.player.takeLife();
+                        missiles.remove(i);
+                        i -= 1;
+                    }
+                }
+            }
+            if (Math.random() <= .1) {
+                double thex = boss.getX() * Math.random() * 2;
+                double they = boss.getY();
+                Missile newmis = new Missile(this, thex, they, false, 1);
+                missiles.add(newmis);
+                getChildren().add(newmis);
+            }
+            if (boss.isWon()) {
+                win();
             }
         }
 
-    } //update
+    }  //update
 
 
     public void reset() {
@@ -214,11 +252,15 @@ public class DemoGame extends Game {
         ew = new endWindow(this, false);
         ewImage = ew.snapshot(null, null);
         ewIView = new ImageView(ewImage);
+	boss = new Boss(this);
+        winew = new endWindow(this, true);
+        winewImage = winew.snapshot(null, null);
+        winewIview = new ImageView(winewImage);
     }
 
     public void handleMissile(KeyEvent kc) {
         if (kc.getCode().getCode() == (KeyCode.SPACE.getCode()) && numba == 0) {
-            Missile newmis = new Missile(this, player.getX(), 620, true);
+            Missile newmis = new Missile(this, player.getX(), 620, true, 0);
             missiles.add(newmis);
             getChildren().add(newmis);
             numba = 7;
@@ -248,9 +290,17 @@ public class DemoGame extends Game {
         }
     }
 
+    public void win() {
+        level = 2;
+	System.out.println("You win nsdjfdksflksd");
+        this.getChildren().add(winewIview);
+        winewIview.setX(100);
+        winewIview.setY(200);
+    }
+
     public void lose() {
         level = 2;
-        System.out.println("game over");
+        System.out.println("game over asflsdlkjfdshfkjsadkjf");
         this.getChildren().add(ewIView);
         ewIView.setX(100);
         ewIView.setY(200);
@@ -259,10 +309,15 @@ public class DemoGame extends Game {
 
     public int getScore() {
         double x = 0;
-        x += Math.pow(this.invaders.checkDeaths(), 1.5) + ((4.0 - this.player.getLives()) * -20);
-        System.out.println(x);
-        return (int) x;
-    }
+       	double n = 1.5;
+        x += Math.pow(this.invaders.checkDeaths(), n) * 3 + ((4.0 - this.player.getLives()) * -20);
+       	double y = (30 - this.boss.getLives()) * 15;
+	if (boss.isWon()) {
+	    y += 650;
+	}
+	return (int) (x + y);
+
+}
 
     public Text getLevelText() {
 	if (level <= 1) {
@@ -279,15 +334,6 @@ public class DemoGame extends Game {
 	}
     Text r = new Text("....");
     return r;
-    }
-
-    public void getBar(Bar b) {
-        thebar = b;
-    }
-
-    public void updateBar() {
-        thebar.update();
-        System.out.println("updating:");
     }
 
 } // DemoGame

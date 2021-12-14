@@ -21,6 +21,9 @@ public class endWindow extends Region {
         this.setWidth(400);
         this.setHeight(150);
         t = new Text("YOU LOST");
+	if (won) {
+	    t = new Text("YOU WON");
+	}
         t.setFont(Font.font(144));
         this.getChildren().add(t);
         //setX(150);

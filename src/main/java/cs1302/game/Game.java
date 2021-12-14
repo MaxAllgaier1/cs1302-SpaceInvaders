@@ -82,7 +82,6 @@ public abstract class Game extends Region {
      */
     protected abstract void update();
 
-    public abstract void getBar(Bar b);
     /**
      * Add the key code for the pressed key to the set of pressed keys.
      * @param event associated key event

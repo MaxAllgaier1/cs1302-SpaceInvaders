@@ -20,7 +20,7 @@ public class Missile extends Rectangle {
      * Construct an {@code IdleCat} object.
      * @param game parent game
      */
-    public Missile(Game game, double x, double y, boolean ship) {
+    public Missile(Game game, double x, double y, boolean ship, int level) {
         super(x, y, 5, 15);
         this.game = game;
         this.ship = ship;
@@ -30,6 +30,11 @@ public class Missile extends Rectangle {
         this.setFill(Color.WHITE);
         if (!ship) {
             this.setFill(Color.RED);
+            if (level == 1) {
+                this.setFill(Color.GREEN);
+                this.setWidth(10);
+                this.setHeight(35);
+            }
         }
     } // IdleCat
 
@@ -43,7 +48,7 @@ public class Missile extends Rectangle {
     public void update() {
         dy = -10;
         if (!ship) {
-            dy = 8;
+            dy = 9;
         }
         setY(getY() + dy);
     } // update

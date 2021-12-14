@@ -61,8 +61,4 @@ public class Bar extends HBox {
         this.game.stop();
         pause.setText("Play");
     }
-
-    public void transportBar(Bar b) {
-        this.game.getBar(b);
-    }
 }
